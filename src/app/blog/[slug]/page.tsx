@@ -17,7 +17,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
                 />
             </article>
         );
-    } catch (error) {
+    } catch {
         notFound(); // 如果文章找不到，显示 404 页面
     }
 }
