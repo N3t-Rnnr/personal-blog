@@ -1,40 +1,32 @@
-import { getPostData } from '@/lib/posts';
-import { notFound } from 'next/navigation';
+import { getSortedPostsData } from '@/lib/posts';
 import Link from 'next/link';
 
-interface PostPageProps {
-    params: {
-        slug: string;
-    };
-}
+export default function HomePage() {
+    const allPosts = getSortedPostsData();
 
-export default async function PostPage({ params }: PostPageProps) {
-    try {
-        const post = await getPostData(params.slug);
+    return (
+        <main>
+            {/* 博客标题 */}
+            <header className="p-4 border-b border-gray-200 dark:border-gray-800">
+                <h1 className="text-xl font-bold">首页</h1>
+            </header>
 
-        return (
-            <div>
-                <header className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-4">
-                    <Link href="/" className="text-blue-500 hover:underline">
-                        ← 返回
+            {/* 文章列表 */}
+            <section>
+                {allPosts.map(({ slug, title, date, excerpt }) => (
+                    <Link href={`/blog/${slug}`} key={slug} className="block">
+                        <article className="p-4 border-b border-gray-200 dark:border-gray-800 cursor-pointer transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-900">
+                            <div className="flex items-center mb-2">
+                                <h2 className="text-lg font-bold">{title}</h2>
+                                <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">· {date}</span>
+                            </div>
+                            <p className="text-gray-700 dark:text-gray-300">
+                                {excerpt}
+                            </p>
+                        </article>
                     </Link>
-                    <div>
-                        <h1 className="text-xl font-bold">文章</h1>
-                    </div>
-                </header>
-
-                <article className="p-4">
-                    <h2 className="text-3xl font-extrabold mb-2">{post.title}</h2>
-                    <p className="text-gray-500 dark:text-gray-400 mb-8">{post.date}</p>
-
-                    <div
-                        className="prose dark:prose-invert max-w-none"
-                        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-                    />
-                </article>
-            </div>
-        );
-    } catch {
-        notFound();
-    }
+                ))}
+            </section>
+        </main>
+    );
 }
