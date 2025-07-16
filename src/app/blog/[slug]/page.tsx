@@ -21,7 +21,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 </header>
 
                 <div
-                    className="prose lg:prose-xl mx-auto"
+                    className="prose dark:prose-invert lg:prose-xl mx-auto"
                     dangerouslySetInnerHTML={{ __html: post.contentHtml }}
                 />
             </article>
