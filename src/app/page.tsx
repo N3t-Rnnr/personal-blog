@@ -6,10 +6,6 @@ export default function HomePage() {
 
     return (
         <main>
-            {/* 博客标题 */}
-            <header className="p-4 border-b border-gray-200 dark:border-gray-800">
-                <h1 className="text-xl font-bold">首页</h1>
-            </header>
 
             {/* 文章列表 */}
             <section>
